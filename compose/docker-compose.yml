@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+
+    webserver:
+       image: webserver-image:v1
+       container_name: webserver
+#       volumes:
+ #        - /webserver_volume:/usr/var/www
+#         - /webserverdata:/var/log/nginx
+       ports:
+         - 8084:80
+
+
+    elfinder:
+       image: elfinder-image:v1
+       container_name: elfinder
+#       volumes:
+ #        - /elfinderdata:/data
+       ports:
+         - 8082:80
+       environment:
+            - ELFINDER_FILES_URI=/elfinder/files
+
+
+    grafana:
+       image: grafana-image:v1
+       container_name: grafana
+ #      volumes:
+      #   - /grafanadata:/var/lib/grafana
+       #  - /grafanadata:/var/log/grafana
+        # - /grafanadata:/etc/grafana
+  #        - /home/docker-admin/compose/grafana.ini:/etc/grafana/
+#       environment:
+ #        - GF_PATHS_CONFIG= ./grafana.ini
+       ports:
+         - 3000:3000
+
+
+    zeppelin:
+       image: zeppelin-image:v1
+       container_name: zeppelin
+#       volumes:
+ #        - zeppelin-site.xml:zeppelin-0.7.3-bin-all/conf/
+       ports:
+          - 8081:8080
+
+    nifi:
+      image: nifi-image:v1
+      container_name: nifi
+      #volumes:
+       # - nifi_data_volume:/opt/nifi/nifi-1.4.0
+    #    - /home/docker/dataministation-builder/assets/nifi/nifi.properties:/opt/nifi/nifi-1.4.0/conf/nifi.properties
+     #   - /home/docker/dataministation-builder/assets/nifi/bootstrap.conf:/opt/nifi/nifi-1.4.0/conf/bootstrap.conf
+      #  - /home/docker/dataministation-builder/assets/nifi/nifi-env.sh:/opt/nifi/nifi-1.4.0/bin/nifi-env.sh
+      ports:
+        - 8086:8080
+        - 8181:8181
+     # labels:
+      #  - "traefik.backend=nifi"
+       # - "traefik.frontend.rule=PathPrefixStrip: /nifi"
+       # - "traefik.port=8181"
+
